@@ -1,1 +1,89 @@
-<p>card works!</p>
+<div class="container">
+  <div class="card" *ngFor="let cardData of Data" [class]="cardData.org">
+    <div class="card-header" [class]="cardData.org">
+      <div class="card-logo" [class]="cardData.org"></div>
+
+      <!-- <div class="profile" [class]="cardData.org"> -->
+      <img
+        [src]="cardData.img"
+        alt=""
+        class="profile-img"
+        [class]="cardData.org"
+      />
+      <!-- </div> -->
+
+      <div
+        class="edit"
+        [class]="cardData.org"
+        (click)="onEditClick(cardData.id)"
+      ></div>
+    </div>
+
+    <div class="card-body">
+      <h5 class="card-title">{{ cardData.name }}</h5>
+      <p class="card-text">{{ cardData.des }}</p>
+      <div class="body-logos">
+        <div
+          *ngFor="let footerImg of cardData.social"
+          class="card-body--logo"
+          [class]="footerImg"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="updateData" *ngIf="editDialogVisibility">
+    <div class="background" (click)="onClose()">
+    </div>
+    <form class="modifyForm">
+      <div class="org">
+        <label for="org">Organization : </label>
+        <!-- <select name="org" [(ngModel)]="selectedOrg"></select> -->
+        <select name="org" id="org" class="inp" [(ngModel)]="selectedOrg" >
+          <option value="gmail">gmail</option>
+          <option value="be">be</option>
+          <option value="fb">fb</option>
+          <option value="twiter">twiter</option>
+          <option value="linked">linked</option>
+          <option value="spear">spear</option>
+          <option value="blogger">blogger</option>
+          <option value="pins">pins</option>
+        </select>
+      </div>
+
+      <div class="name">
+        <label for="name">Name : </label>
+        <input type="text" id="name" class="inp" [(ngModel)]="userProfileName" name="first"/>
+      </div>
+
+      <div class="profile">
+        <label for="image">Profile pic : </label>
+        <input type="text" id="image" class="inp" [(ngModel)]="userProfileUrl" name="profileImg" />
+      </div>
+
+      <div class="des">
+        <label for="desc">Description : </label>
+        <textarea name="description" id="desc" class="inp inpDes" [(ngModel)]="userProfileDes"></textarea>
+      </div>
+
+      <div class="social">
+        <label for="social">Social media : </label>
+        <div class="inputFeild inp" >
+          <div *ngFor="let data of AllSocialLinks">
+            <!-- {{ data }} -->
+            <div><input type="checkbox" name="social{{ data }}" id="{{ data }}" [checked]= "contains(data)" (click)="onCheckboxChange(data)"/> {{ MapForNames(data) }} </div>
+          </div>
+          <!-- <div><input type="checkbox" name="social" id="gmail" />Gmail</div>
+          <div><input type="checkbox" name="social" id="twiter" />Twiter</div>
+          <div><input type="checkbox" name="social" id="linked" />LinkedIn</div>
+          <div><input type="checkbox" name="social" id="spear" />Spear</div> -->
+        </div>
+      </div>
+
+      <div class="modifierBtn">
+        <button class="deleteBtn" (click)="onDeleteClick()">Delete</button>
+        <button class="editBtn" (click)="onEditData()">Edit</button>
+      </div>
+    </form>
+  </div>
+</div>
